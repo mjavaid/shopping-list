@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env
+
+# FastAPI / Uvicorn
+*.log
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+
+# OS / Editor
+.DS_Store
+.vscode/
+.idea/
