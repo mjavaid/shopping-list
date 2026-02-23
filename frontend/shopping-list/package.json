@@ -1,1 +1,0 @@
-{\n  "name": "shopping-list",\n  "version": "0.0.1",\n  "scripts": {\n    "build": "ng build",\n    "ci": "npm ci"\n  },\n  "dependencies": {\n    "@angular/core": "^17.0.0",\n    "@angular/common": "^17.0.0",\n    "@angular/router": "^17.0.0"\n  },\n  "devDependencies": {\n    "@angular/cli": "^17.0.0",\n    "typescript": "~4.9.5"\n  }\n}
