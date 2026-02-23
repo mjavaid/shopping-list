@@ -10,6 +10,7 @@ __pycache__/
 
 # SQLite database
 data/*.db
+**/data/*.db
 
 # Node / Angular
 node_modules/
