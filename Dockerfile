@@ -1,18 +1,37 @@
 # Stage 1: Build the Angular app
-FROM node:14 as build
-WORKDIR /app
-COPY frontend/package*.json ./
-RUN npm install
-COPY frontend/ .
-RUN npm run build --prod
+FROM node:20-alpine AS frontend-build
+WORKDIR /frontend
 
-# Stage 2: Set up the FastAPI app
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8
+# Install deps first (better layer caching)
+COPY frontend/package*.json ./
+RUN npm ci
+
+# Build
+COPY frontend/ ./
+RUN npm run build
+
+
+# Stage 2: Build the FastAPI runtime image
+FROM python:3.11-slim AS runtime
 WORKDIR /app
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-COPY --from=build /app/dist /app/app/static
-COPY backend/*.py /app/app/
-    
-# Command to run the FastAPI app
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+# System deps (optional, but useful for health/debug)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+
+# Python deps
+COPY backend/requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# App code
+COPY backend/app /app/app
+
+# Copy built Angular assets into FastAPI static directory
+COPY --from=frontend-build /frontend/dist /app/app/static
+
+EXPOSE 80
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
