@@ -17,7 +17,7 @@ uvicorn app.main:app --reload
 ```
 
 ### Frontend
-The Angular 17 app is located in `frontend/` (routing enabled, SCSS styling).
+The Angular 19 app is located in `frontend/` (routing enabled, SCSS styling).
 
 ```bash
 cd frontend
