@@ -8,6 +8,10 @@ __pycache__/
 # FastAPI / Uvicorn
 *.log
 
+# SQLite database
+data/*.db
+**/data/*.db
+
 # Node / Angular
 node_modules/
 dist/

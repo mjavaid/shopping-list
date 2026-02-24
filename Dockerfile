@@ -29,6 +29,11 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # App code
 COPY backend/app /app/app
+COPY backend/alembic /app/alembic
+COPY backend/alembic.ini /app/alembic.ini
+
+# Ensure data directory exists (mount a volume here for persistence)
+RUN mkdir -p /app/data
 
 # Copy built Angular assets into FastAPI static directory
 COPY --from=frontend-build /frontend/dist /app/app/static
