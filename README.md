@@ -17,7 +17,7 @@ uvicorn app.main:app --reload
 ```
 
 ### Frontend
-Create the Angular app in `frontend/` (or use `ng new frontend`).
+The Angular 19 app is located in `frontend/` (routing enabled, SCSS styling).
 
 ```bash
 cd frontend
